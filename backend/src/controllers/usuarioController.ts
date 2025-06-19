@@ -1,9 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const prisma = new PrismaClient();
-const JWT_SECRET = 'secreto'; // ideal: usar variável de ambiente
+const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
 export const cadastrarUsuario = async (req: any, res: any) => {
   const { nome, email, senha, cargo } = req.body;

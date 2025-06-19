@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-const JWT_SECRET = 'secreto';
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
 const autenticarUsuario = (req: any, res: any, next: any) => {
   const token = req.header('Authorization');

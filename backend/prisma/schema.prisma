@@ -8,11 +8,44 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  nome          String
-  email         String   @unique
-  senha         String
-  cargo         String
-  status        Boolean  @default(true)
-  dataAdmissao  DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  nome         String
+  email        String   @unique
+  senha        String
+  cargo        String
+  status       Boolean  @default(true)
+  dataAdmissao DateTime @default(now())
+  vendas       Venda[]
+}
+
+model Produto {
+  id           Int         @id @default(autoincrement())
+  nome         String
+  codigoBarras String      @unique
+  preco        Float
+  estoque      Int
+  categoria    String
+  fornecedor   String
+  itens        ItemVenda[]
+}
+
+model Venda {
+  id          Int         @id @default(autoincrement())
+  usuarioId   Int
+  usuario     User        @relation(fields: [usuarioId], references: [id])
+  total       Float
+  nomeCliente String
+  cpfCliente  String
+  data        DateTime    @default(now())
+  itens       ItemVenda[]
+}
+
+model ItemVenda {
+  id            Int     @id @default(autoincrement())
+  vendaId       Int
+  venda         Venda   @relation(fields: [vendaId], references: [id])
+  produtoId     Int
+  produto       Produto @relation(fields: [produtoId], references: [id])
+  quantidade    Int
+  precoUnitario Float
 }
