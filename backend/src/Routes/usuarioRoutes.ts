@@ -1,25 +1,20 @@
 import { Router } from 'express';
-import { cadastrarUsuario, loginUsuario } from '../controllers/usuarioController';
+import { cadastrarUsuario, loginUsuario, perfilUsuario, editarUsuario, alterarStatusUsuario } from '../controllers/usuarioController';
 import autenticarUsuario from '../middlewares/authMiddleware';
 import autorizarCargo from '../middlewares/authRoleMiddleware';
-import { PrismaClient } from '@prisma/client';
 
 const router = Router();
-const prisma = new PrismaClient();
 
+// Rotas públicas
 router.post('/cadastrar', cadastrarUsuario);
 router.post('/login', loginUsuario);
 
-router.get('/perfil', autenticarUsuario, (req: any, res: any) => {
-  res.json({
-    mensagem: `Bem-vindo, usuário ${req.usuario.id}!`,
-    cargo: req.usuario.cargo,
-  });
-});
+// Rotas protegidas
+router.get('/perfil', autenticarUsuario, perfilUsuario);
 
 router.get('/listar', autenticarUsuario, autorizarCargo(['Gerente']), async (req: any, res: any) => {
   try {
-    const usuarios = await prisma.user.findMany({
+    const usuarios = await req.prisma.user.findMany({
       select: {
         id: true,
         nome: true,
@@ -35,5 +30,8 @@ router.get('/listar', autenticarUsuario, autorizarCargo(['Gerente']), async (req
     res.status(500).json({ erro: 'Erro ao buscar usuários' });
   }
 });
+
+router.put('/editar/:id', autenticarUsuario, editarUsuario);
+router.patch('/status/:id', autenticarUsuario, autorizarCargo(['Gerente']), alterarStatusUsuario);
 
 export default router;
