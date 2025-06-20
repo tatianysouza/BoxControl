@@ -36,6 +36,7 @@ model Venda {
   total       Float
   nomeCliente String
   cpfCliente  String
+  pago         Boolean     @default(true)
   data        DateTime    @default(now())
   itens       ItemVenda[]
 }

@@ -2,7 +2,13 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const registrarVenda = async (req: any, res: any) => {
-  const { itens, nome_cliente = 'Não informado', cpf_cliente = 'Não informado' } = req.body;
+  const {
+    itens,
+    nome_cliente = 'Não informado',
+    cpf_cliente = 'Não informado',
+    pago = true
+  } = req.body;
+
   const usuario_id = req.usuario?.id;
 
   if (!usuario_id || !itens || itens.length === 0) {
@@ -49,6 +55,7 @@ export const registrarVenda = async (req: any, res: any) => {
         total,
         nomeCliente: nome_cliente,
         cpfCliente: cpf_cliente,
+        pago,
         itens: {
           create: itens.map((item: any) => ({
             produtoId: item.produto_id,
@@ -125,5 +132,26 @@ export const excluirVenda = async (req: any, res: any) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ erro: 'Erro ao excluir a venda' });
+  }
+};
+
+export const atualizarStatusPagamento = async (req: any, res: any) => {
+  const { id } = req.params;
+  const { pago } = req.body;
+
+  if (typeof pago !== 'boolean') {
+    return res.status(400).json({ erro: 'O campo "pago" deve ser true ou false.' });
+  }
+
+  try {
+    const vendaAtualizada = await prisma.venda.update({
+      where: { id: Number(id) },
+      data: { pago }
+    });
+
+    res.json({ mensagem: 'Status de pagamento atualizado!', venda: vendaAtualizada });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ erro: 'Erro ao atualizar status de pagamento' });
   }
 };
