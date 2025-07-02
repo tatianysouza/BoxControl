@@ -1,0 +1,33 @@
+.inputGroup {
+  margin-bottom: 18px;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--dark);
+  font-size: 14px;
+}
+
+.inputIcon {
+  display: flex;
+  align-items: center;
+  background-color: var(--grey);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.inputIcon i {
+  margin-right: 10px;
+  color: var(--dark-grey);
+  font-size: 1.2rem;
+}
+
+.inputIcon input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-family: var(--lato);
+  color: var(--dark);
+}
