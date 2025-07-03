@@ -8,7 +8,7 @@ const Escolha = () => {
   return (
     <div>
         <Header
-            leftContent={<img src="../../../public/images/Logos/BoxControlBanner.png" alt="Logo" style={{ height: '40px' }} />}
+            leftContent={<img src="../../../public/images/Logos/BoxControlBanner.png" alt="Logo" style={{ height: '35px' }} />}
             centerContent={null}
             rightContent={<LogoutButton />}
         />
