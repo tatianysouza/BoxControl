@@ -3,7 +3,7 @@ import type { InputHTMLAttributes } from 'react';
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  icon: string;
+  icon?: string;
 }
 
 const InputField = ({ label, icon, ...rest }: InputFieldProps) => {

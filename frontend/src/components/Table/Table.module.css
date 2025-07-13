@@ -1,0 +1,53 @@
+/* .table{
+    background: var(--light);
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.table tr{
+    text-align: left;
+    color: var(--dark);
+    margin-bottom: 24px;
+}
+.cabecalho{
+    background-color: aqua;
+} */
+.tableContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+.table{
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    width: 100%;
+    max-width: 800px;
+    border-collapse: separate;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.table thead th{
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: bold;
+}
+.table tbody td{
+    padding: 14px 16px;
+    border-top: 1px solid #f0f0f0;
+}
+.actions {
+  display: flex;
+  gap: 10px; /* espaço entre os botões */
+  justify-content: flex-start; /* ou center, se quiser centralizar */
+  align-items: center;
+}
