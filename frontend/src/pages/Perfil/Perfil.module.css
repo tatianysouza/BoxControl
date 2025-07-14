@@ -1,0 +1,42 @@
+.formProfile{
+    background: var(--light);
+    padding: 50px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.section{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.select{
+    margin-bottom: 18px;
+}
+
+.select label{
+    display: block;
+    margin-bottom: 6px;
+    color: var(--dark);
+    font-size: 14px;
+    text-align: left;
+}
+.select select{
+    border: none;
+    width: 100%;
+    font-family: var(--lato);
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    background-color: var(--grey);
+    border-radius: 8px;
+    padding: 10px;
+}
