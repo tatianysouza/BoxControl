@@ -4,7 +4,6 @@ import { vi } from 'vitest';
 import Estoque from './Estoque';
 import type { ReactNode } from 'react';
 
-// 👇 Tipos exatos usados no sistema
 type Produto = {
   id: number;
   nome: string;
@@ -34,7 +33,6 @@ interface TableProps {
   buscaAPI: boolean;
 }
 
-// 👇 Mock da navegação
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
@@ -44,7 +42,6 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// 👇 Mocks tipados dos componentes
 vi.mock('../../components/BackButton/BackButton', () => ({
   default: ({ text, onClick }: BackButtonProps) => (
     <button onClick={onClick}>{text}</button>
@@ -83,7 +80,6 @@ vi.mock('../../components/Table/Table', () => ({
   ),
 }));
 
-// 👇 Testes
 describe('Tela Estoque', () => {
   beforeEach(() => {
     mockNavigate.mockClear();

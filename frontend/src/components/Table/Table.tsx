@@ -59,8 +59,8 @@ export default function Table({produtos: propsProdutos, buscaAPI = false}: Tabel
                         <tr key={p.id}>
                             <td>{p.nome}</td>
                             <td>{p.codBarras}</td>
-                            <td>{p.estoque}</td>
                             <td>{p.categoria}</td>
+                            <td>{p.estoque}</td>
                             <td>{p.fornecedor}</td>
                             <td>
                                 <div className={styles.actions}>

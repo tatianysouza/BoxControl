@@ -3,7 +3,6 @@ import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 import Escolha from './Escolha';
 
-// Tipagem das props dos mocks
 interface HeaderProps {
   leftContent?: React.ReactNode;
   centerContent?: React.ReactNode;
@@ -18,7 +17,6 @@ interface LogoutButtonProps {
   onClick: () => void;
 }
 
-// ✅ Mock para navegação
 const mockNavigate = vi.fn();
 
 vi.mock('react-router-dom', async () => {
@@ -29,7 +27,6 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// ✅ Mocks dos componentes filhos com props tipadas
 vi.mock('../../components/Header/Header', () => ({
   default: (props: HeaderProps) => (
     <header>
