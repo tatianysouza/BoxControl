@@ -1,10 +1,36 @@
 import InputField from '../../components/Input/InputField';
 import Button from '../../components/Button/Button';
 import styles from './LoginForm.module.css';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    try{
+      const response = await axios.post("http://localhost:5000/api/usuarios/login", {email, senha});
+      const token = response.data.token;
+
+      if(token){
+        localStorage.setItem("token", token);
+        alert("Logado com sucesso!");
+        navigate("/dashboard");
+      }
+    } catch(error: unknown){
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.erro || "Erro ao fazer login");
+        console.error("Axios error:", error);
+      } else {
+        console.error("Erro inesperado:", error);
+      }
+    }
   };
 
   return (
@@ -17,6 +43,8 @@ const LoginForm = () => {
           type="email"
           placeholder="Digite seu email"
           icon="bx-envelope"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
 
@@ -25,10 +53,12 @@ const LoginForm = () => {
           type="password"
           placeholder="Digite sua senha"
           icon="bx-lock-alt"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
           required
         />
 
-        <Button text="Entrar" type="submit" />
+        <Button text="Entrar" type="submit" color='' onClick={handleSubmit}/>
       </form>
     </div>
   );
