@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css');
+
+:root {
+  --poppins: 'Poppins', sans-serif;
+  --lato: 'Lato', sans-serif;
+
+  --light: #F9F9F9;
+  --blue: #3C91E6;
+  --grey: #EEE;
+  --dark: #342E37;
+  --dark-grey: #AAAAAA;
+  --red: #DB504A;
+  --green: #3CB371;
+  --orange: #FFA500;
+  --background: #F0F2F5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--poppins);
+  background-color: var(--background);
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+}
+
+ul {
+  list-style: none;
+}
