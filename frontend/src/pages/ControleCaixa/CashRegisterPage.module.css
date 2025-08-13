@@ -1,0 +1,71 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.productList {
+  flex: 2;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+}
+
+.productHeader {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  padding: 6px 0;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.productItems {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.summary {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.total {
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--blue);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.clientFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}

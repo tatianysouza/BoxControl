@@ -1,0 +1,16 @@
+.productItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.qtyInput {
+  width: 50px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  text-align: right;
+  margin-right: 4px;
+}

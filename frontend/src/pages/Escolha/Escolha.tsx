@@ -26,7 +26,7 @@ const Escolha = () => {
         <h3>Escolha uma opção:</h3>
         <div className={styles.optionsGrid}>
           <OptionCard icon="bx-user-circle" label="Meu Perfil" onClick={profile} />
-          <OptionCard icon="bx-wallet" label="Controle de Caixa" onClick={() => {}} />
+          <OptionCard icon="bx-wallet" label="Controle de Caixa" onClick={() => {navigate("/caixa")}} />
           <OptionCard icon="bx-shopping-bag" label="Minhas Vendas" onClick={() => {}} />
           <OptionCard icon="bx-box" label="Estoque" onClick={() => {navigate("/estoque")}} />
         </div>
