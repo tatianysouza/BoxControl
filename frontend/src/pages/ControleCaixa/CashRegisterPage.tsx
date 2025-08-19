@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import socket from "../../socket";
 import Header from "../../components/Header/Header";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/InputField";
@@ -9,21 +10,72 @@ interface Product {
   id: number;
   name: string;
   price: number;
+  codigoBarras: string;
   quantidade: number;
 }
 
-const mockProducts: Product[] = [
-  { id: 1, name: "Arroz 5kg", price: 25.9, quantidade: 1 },
-  { id: 2, name: "Feijão 1kg", price: 8.5, quantidade: 1 },
-  { id: 3, name: "Leite 1L", price: 4.2, quantidade: 1 },
-  { id: 4, name: "Refrigerante 2L", price: 9.9, quantidade: 1 },
-];
-
 const CashRegisterPage: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>(mockProducts);
+  const [products, setProducts] = useState<Product[]>([]);
   const [cliente, setCliente] = useState("");
   const [cpf, setCpf] = useState("");
   const [pago, setPago] = useState(true);
+  const [codigoBarras, setCodigoBarras] = useState("");
+  const usuarioId = 1; 
+  const total = products.reduce((acc, p) => acc + p.price * p.quantidade, 0);
+
+  useEffect(() => {
+    const handleProdutoAtualizado = (produtos: Product[]) => {
+      console.log("📦 Evento recebido no navegador:", produtos);
+      setProducts(produtos);
+    };
+
+    const handleErroProduto = (data: { mensagem: string }) => {
+      alert(data.mensagem);
+    };
+
+    const handleVendaFinalizada = () => {
+      alert("Venda finalizada com sucesso!");
+      setProducts([]);
+      setCliente("");
+      setCpf("");
+      setPago(true);
+      setCodigoBarras("");
+    };
+
+    const handleErroFinalizar = (data: { mensagem: string }) => {
+      alert(data.mensagem);
+    };
+
+    socket.on("connect", () => {
+      console.log("🟢 Conectado ao socket");
+    });
+
+    socket.on("produto_atualizado", handleProdutoAtualizado);
+    socket.on("erro_produto", handleErroProduto);
+    socket.on("venda_finalizada", handleVendaFinalizada);
+    socket.on("erro_finalizar", handleErroFinalizar);
+
+    socket.onAny((event, ...args) => {
+      console.log("📡 Evento recebido:", event, args);
+    });
+
+    return () => {
+      socket.off("produto_atualizado", handleProdutoAtualizado);
+      socket.off("erro_produto", handleErroProduto);
+      socket.off("venda_finalizada", handleVendaFinalizada);
+      socket.off("erro_finalizar", handleErroFinalizar);
+    };
+  }, []);
+
+  const handleAdicionarProduto = () => {
+    if (codigoBarras.trim() !== "") {
+      socket.emit("adicionar_produto", {
+        usuarioId,
+        codigo_barras: codigoBarras.trim(),
+      });
+      setCodigoBarras("");
+    }
+  };
 
   const handleQuantityChange = (id: number, qty: number) => {
     setProducts((prev) =>
@@ -31,7 +83,25 @@ const CashRegisterPage: React.FC = () => {
     );
   };
 
-  const total = products.reduce((acc, p) => acc + p.price * p.quantidade, 0);
+  const handleFinalizarCompra = () => {
+    if (products.length === 0) {
+      alert("Adicione pelo menos um produto antes de finalizar a venda!");
+      return;
+    }
+
+    const itensParaEnviar = products.map((p) => ({
+      codigo_barras: p.codigoBarras,
+      quantidade: p.quantidade,
+    }));
+
+    socket.emit("finalizar_venda", {
+      nome_cliente: cliente || "Não informado",
+      cpf_cliente: cpf || "Não informado",
+      pago,
+      itens: itensParaEnviar,
+      usuarioId,
+    });
+  };
 
   return (
     <div className={styles.page}>
@@ -42,13 +112,24 @@ const CashRegisterPage: React.FC = () => {
       />
 
       <div className={styles.container}>
-        {/* Lista de produtos */}
         <div className={styles.productList}>
           <h2>Produtos</h2>
+
+          <div className={styles.inputRow}>
+            <Input
+              label="Código de Barras"
+              placeholder="Digite ou escaneie"
+              value={codigoBarras}
+              onChange={(e) => setCodigoBarras(e.target.value)}
+            />
+            <Button text="Adicionar" color="secondary" onClick={handleAdicionarProduto} />
+          </div>
+
           <div className={styles.productHeader}>
             <span>Produto</span>
             <span>Qtd x Preço</span>
           </div>
+
           <ul className={styles.productItems}>
             {products.map((product) => (
               <ProductRow
@@ -63,7 +144,6 @@ const CashRegisterPage: React.FC = () => {
           </ul>
         </div>
 
-        {/* Resumo da compra */}
         <div className={styles.summary}>
           <div>
             <div className={styles.total}>R$ {total.toFixed(2)}</div>
@@ -92,7 +172,7 @@ const CashRegisterPage: React.FC = () => {
             </div>
           </div>
 
-          <Button text="Finalizar Compra" color="primary" onClick={() => {}} />
+          <Button text="Finalizar Compra" color="primary" onClick={handleFinalizarCompra} />
         </div>
       </div>
     </div>

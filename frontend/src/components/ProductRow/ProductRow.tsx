@@ -33,5 +33,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
     </li>
   );
 };
+console.log("🔍 Renderizando:", name);
+
 
 export default ProductRow;
