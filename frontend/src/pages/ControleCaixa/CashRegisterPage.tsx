@@ -14,56 +14,39 @@ interface Product {
   quantidade: number;
 }
 
+// ...imports e interface permanecem iguais...
+
 const CashRegisterPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [cliente, setCliente] = useState("");
   const [cpf, setCpf] = useState("");
   const [pago, setPago] = useState(true);
   const [codigoBarras, setCodigoBarras] = useState("");
-  const usuarioId = 1; 
+  const usuarioId = 1;
   const total = products.reduce((acc, p) => acc + p.price * p.quantidade, 0);
 
   useEffect(() => {
     const handleProdutoAtualizado = (produtos: Product[]) => {
-      console.log("📦 Evento recebido no navegador:", produtos);
       setProducts(produtos);
     };
 
-    const handleErroProduto = (data: { mensagem: string }) => {
-      alert(data.mensagem);
-    };
-
-    const handleVendaFinalizada = () => {
+    socket.on("produto_atualizado", handleProdutoAtualizado);
+    socket.on("erro_produto", (data) => alert(data.mensagem));
+    socket.on("venda_finalizada", () => {
       alert("Venda finalizada com sucesso!");
       setProducts([]);
       setCliente("");
       setCpf("");
       setPago(true);
       setCodigoBarras("");
-    };
-
-    const handleErroFinalizar = (data: { mensagem: string }) => {
-      alert(data.mensagem);
-    };
-
-    socket.on("connect", () => {
-      console.log("🟢 Conectado ao socket");
     });
-
-    socket.on("produto_atualizado", handleProdutoAtualizado);
-    socket.on("erro_produto", handleErroProduto);
-    socket.on("venda_finalizada", handleVendaFinalizada);
-    socket.on("erro_finalizar", handleErroFinalizar);
-
-    socket.onAny((event, ...args) => {
-      console.log("📡 Evento recebido:", event, args);
-    });
+    socket.on("erro_finalizar", (data) => alert(data.mensagem));
 
     return () => {
       socket.off("produto_atualizado", handleProdutoAtualizado);
-      socket.off("erro_produto", handleErroProduto);
-      socket.off("venda_finalizada", handleVendaFinalizada);
-      socket.off("erro_finalizar", handleErroFinalizar);
+      socket.off("erro_produto");
+      socket.off("venda_finalizada");
+      socket.off("erro_finalizar");
     };
   }, []);
 
@@ -115,16 +98,6 @@ const CashRegisterPage: React.FC = () => {
         <div className={styles.productList}>
           <h2>Produtos</h2>
 
-          <div className={styles.inputRow}>
-            <Input
-              label="Código de Barras"
-              placeholder="Digite ou escaneie"
-              value={codigoBarras}
-              onChange={(e) => setCodigoBarras(e.target.value)}
-            />
-            <Button text="Adicionar" color="secondary" onClick={handleAdicionarProduto} />
-          </div>
-
           <div className={styles.productHeader}>
             <span>Produto</span>
             <span>Qtd x Preço</span>
@@ -169,6 +142,15 @@ const CashRegisterPage: React.FC = () => {
                 />
                 Não Pago
               </label>
+              <div className={styles.inputRow}>
+                <Input
+                  label="Código de Barras"
+                  placeholder="Digite ou escaneie"
+                  value={codigoBarras}
+                  onChange={(e) => setCodigoBarras(e.target.value)}
+                />
+                <Button text="Adicionar" color="var(--light-blue)" onClick={handleAdicionarProduto} />
+              </div>
             </div>
           </div>
 
