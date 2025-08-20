@@ -4,7 +4,7 @@ interface CardEstatisticaProps {
   corQuadrado: string;
   icone: string;
   titulo: string;
-  valor: string;
+  valor: number;
 }
 
 export default function CardEstatistica({ corQuadrado, icone, titulo, valor }: CardEstatisticaProps) {

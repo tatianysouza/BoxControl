@@ -1,38 +1,91 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import styles from './Dashboard.module.css';
 import Header from '../../components/Header/Header';
 import BackButton from '../../components/BackButton/BackButton';
 import Title from '../../components/Title/Title';
 import CardEstatistica from '../../components/CardEstatistica/CardEstatistica';
-import { TabelaVendasRecentes } from '../../components/TabelaVendasRecentes/TabelaVendasRecentes';
 import { ListaProdutosMaisVendidos } from '../../components/ListaProdutosMaisVendidos/ListaProdutosMaisVendidos';
+
+type Estatistica = {
+  titulo: string;
+  valor: number; 
+  icone: string;
+};
+
+type ProdutoMaisVendido = {
+  nome: string;
+  quantidade: number;
+};
+
+type ProdutoBaixoEstoqueAPI = {
+  id: number;
+  nome: string;
+  estoque: number;
+};
+
+type ProdutoMaisVendidoAPI = {
+  produtoId: number;
+  quantidadeVendida: number | null;
+  produto: { nome: string } | null;
+};
+
+type DashboardResponse = {
+  produtosBaixoEstoque: ProdutoBaixoEstoqueAPI[];
+  vendasMes: number;
+  totalArrecadado: number;
+  produtosMaisVendidos: ProdutoMaisVendidoAPI[];
+};
 
 export default function Dashboard() {
   const navigate = useNavigate();
 
-  const estatisticas = [
-    { titulo: 'Total em vendas', valor: 'R$2543,00', icone: 'bxs-dollar-circle' },
-    { titulo: 'Quantidade de vendas', valor: '2834', icone: 'bxs-group' },
-    { titulo: 'Produtos com estoque baixo', valor: '5', icone: 'bxs-calendar-check' },
-  ];
+  const [estatisticas, setEstatisticas] = useState<Estatistica[]>([]);
+  const [produtosMaisVendidos, setProdutosMaisVendidos] = useState<ProdutoMaisVendido[]>([]);
 
-  const vendasRecentes = [
-    { cliente: 'Micheal John', data: '18-10-2021', status: 'Completado' },
-    { cliente: 'Ryan Doe', data: '01-06-2022', status: 'Pendente' },
-    { cliente: 'Selma', data: '01-02-2023', status: 'Completado' },
-  ];
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const token = localStorage.getItem('token');
 
-  const produtosMaisVendidos = [
-    { nome: 'Café', quantidade: 150 },
-    { nome: 'Arroz', quantidade: 100 },
-    { nome: 'Feijão', quantidade: 80 },
-    { nome: 'Macarrão', quantidade: 60 },
-  ];
+        const response = await fetch('http://localhost:5000/api/dashboard', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Falha ao buscar /api/dashboard (status ${response.status})`);
+        }
+
+        const data: DashboardResponse = await response.json();
+
+        const estats: Estatistica[] = [
+          { titulo: 'Total em vendas', valor: data.totalArrecadado ?? 0, icone: 'bxs-dollar-circle' },
+          { titulo: 'Quantidade de vendas', valor: data.vendasMes ?? 0, icone: 'bxs-group' },
+          { titulo: 'Produtos com estoque baixo', valor: data.produtosBaixoEstoque?.length ?? 0, icone: 'bxs-calendar-check' },
+        ];
+        setEstatisticas(estats);
+
+        const produtos: ProdutoMaisVendido[] = (data.produtosMaisVendidos ?? []).map((p) => ({
+          nome: p.produto?.nome ?? 'Produto desconhecido',
+          quantidade: p.quantidadeVendida ?? 0,
+        }));
+        setProdutosMaisVendidos(produtos);
+      } catch (error) {
+        console.error('Erro ao buscar dados do dashboard', error);
+      }
+    };
+
+    fetchDashboard();
+  }, []);
 
   return (
     <>
       <Header
-        leftContent={<BackButton text="Voltar" onClick={() => navigate("/Dashboard")} />}
+        leftContent={<BackButton text="Voltar" onClick={() => navigate('/Dashboard')} />}
         centerContent={<Title titulo="Painel de Controle" />}
         rightContent={null}
       />
@@ -53,7 +106,6 @@ export default function Dashboard() {
         <div className={styles.container}>
           <div className={styles.productList}>
             <ListaProdutosMaisVendidos produtos={produtosMaisVendidos} />
-            <TabelaVendasRecentes vendas={vendasRecentes} />
           </div>
         </div>
       </div>
