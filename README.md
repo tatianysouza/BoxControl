@@ -4,14 +4,19 @@ Um sistema web para gerenciamento de vendas, produtos, usuários e controle de c
 
 > *ps: sim, eu sei que “BoxControl” não é exatamente como se diz “controle de caixa” em inglês... mas é estiloso, vai.*
 
-## Funcionalidades atuais
+## Funcionalidades
 
 Funcionalidades com componentes prototipados:
 
 - Login
 - Tela de escolha pós-login
+- Controle de caixa
 - Perfil do usuário
 - Controle de estoque
+- Controle de vendas
+- Minhas vendas
+- Funcionários
+- Dashboard
 
 ## Como rodar o projeto
 
@@ -24,9 +29,9 @@ Funcionalidades com componentes prototipados:
 npm install
 ```
 
-3. Crie um banco de dados no PostgreSQL com o nome:
+3. Para criar o banco de dados:
 ```bash
-boxcontrol
+npx prisma migrate dev
 ```
 
 4. Crie um arquivo .env com o seguinte conteúdo:
@@ -49,7 +54,9 @@ npm run dev
 npm install
 ```
 
-3. Rode o projeto:
+3. Antes de rodar o projeto, vá até o arquivo `socket.ts` e substitua o valor `xxx.xxx.xx.x` pelo IP da sua internet. Esse mesmo IP deve ser configurado também no aplicativo de leitor de código de barras para que a conexão funcione corretamente.
+
+4. Rode o projeto:
 ```bash
 npm run dev
 ```
@@ -58,3 +65,24 @@ npm run dev
 ```bash
 npm run test
 ```
+
+--
+## 📱 Aplicativo de Leitor de Código de Barras
+
+Para **realizar as vendas**, é necessário utilizar também o aplicativo de leitor de código de barras.  
+Esse app é responsável por capturar os códigos dos produtos cadastrados no banco de dados e integrá-los ao sistema.
+
+### Repositório do Leitor de código de barras
+Clone o repositório do leitor de código de barras a partir do link abaixo:
+
+👉 [Leitor de Código de Barras](https://github.com/tatianysouza/BarCodeScanner.git)  
+
+### Configuração
+Após clonar, siga os passos descritos no **README do repositório do leitor** para configurar corretamente o aplicativo.
+
+### Uso
+1. Abra o app de leitor de código de barras.  
+2. Escaneie os produtos cadastrados no banco de dados.  
+3. O sistema de vendas irá reconhecer os códigos lidos e adicionar o produto a lista de compras.  
+
+⚠️ **Atenção**: sem o uso do aplicativo de leitor de código de barras, não será possível registrar vendas.
