@@ -5,7 +5,8 @@ interface BadgeStatusProps {
 }
 
 export const BadgeStatus = ({ status }: BadgeStatusProps) => {
-  const statusClass = status.toLowerCase() === 'completado' ? styles.completado : styles.pendente;
+  const statusClass =
+    status.toLowerCase() === 'pago' ? styles.completado : styles.pendente;
 
   return (
     <span className={`${styles.badge} ${statusClass}`}>

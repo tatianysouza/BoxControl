@@ -1,0 +1,61 @@
+.container {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  margin-top: 3%;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Arial', sans-serif;
+}
+
+.tabela thead {
+  background-color: var(--blue);
+  color: white;
+  font-weight: 600;
+}
+
+.tabela th, .tabela td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.linha:nth-child(even) {
+  background-color: var(--background);
+}
+
+.linha:hover {
+  background-color: #dcefff;
+}
+
+.acoes {
+  display: flex;
+  gap: 5px;
+}
+
+.semVendas {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: var(--dark-grey);
+}
+
+.pago {
+  color: var(--green);
+  font-weight: bold;
+}
+
+.naoPago {
+  color: var(--red);
+  font-weight: bold;
+}
+
+.filtro {
+  margin-bottom: 20px;
+  max-width: 400px;
+}
