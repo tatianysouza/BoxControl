@@ -8,9 +8,9 @@
 }
 
 .completado {
-  background-color: green;
+  background-color: var(--green);
 }
 
 .pendente {
-  background-color: orange;
+  background-color: var(--orange);
 }

@@ -9,6 +9,7 @@ const router = Router();
 router.get('/', autenticarUsuario, autorizarCargo(['Gerente']), dadosDashboard);
 
 // Vendas por funcionário
-router.get('/vendas-por-funcionario', autenticarUsuario, autorizarCargo(['Gerente']), vendasPorFuncionario);
+router.get('/minhas-vendas', autenticarUsuario, vendasPorFuncionario);
+
 
 export default router;

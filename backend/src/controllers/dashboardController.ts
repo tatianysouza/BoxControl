@@ -106,16 +106,15 @@ export const vendasPorFuncionario = async (req: any, res: any) => {
     const inicioMes = new Date(filtroAno, filtroMes, 1);
     const fimMes = new Date(filtroAno, filtroMes + 1, 0, 23, 59, 59);
 
+    const usuarioLogadoId = req.usuario.id;
+
     const filtro: any = {
       data: {
         gte: inicioMes,
         lte: fimMes,
       },
+      usuarioId: usuarioId ? Number(usuarioId) : usuarioLogadoId,
     };
-
-    if (usuarioId) {
-      filtro.usuarioId = Number(usuarioId);
-    }
 
     const vendas = await prisma.venda.findMany({
       where: filtro,
