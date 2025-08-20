@@ -1,0 +1,33 @@
+.card {
+  padding: 24px;
+  background: var(--light);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.iconBox {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.iconBox i {
+  font-size: 28px;
+}
+
+.text h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #342E37;
+}
+
+.text p {
+  font-size: 14px;
+  color: #555;
+}

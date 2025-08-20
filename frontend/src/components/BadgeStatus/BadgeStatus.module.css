@@ -1,0 +1,16 @@
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.completado {
+  background-color: green;
+}
+
+.pendente {
+  background-color: orange;
+}

@@ -1,0 +1,27 @@
+.tableWrapper {
+  margin-top: 30px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.table thead {
+  background-color: var(--blue);
+  color: white;
+}
+
+.table th, .table td {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

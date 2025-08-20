@@ -56,7 +56,7 @@ const Escolha = () => {
           {isGerente && (
             <>
               <OptionCard icon="bx-box" label="Estoque" onClick={() => navigate("/estoque")} />
-              <OptionCard icon="bx-bar-chart-alt-2" label="Painel / Dashboard" onClick={() => navigate("/dashboard")} />
+              <OptionCard icon="bx-bar-chart-alt-2" label="Painel / Dashboard" onClick={() => navigate("/painel-de-controle")} />
               <OptionCard icon="bx-shopping-bag" label="Vendas gerais" onClick={() => navigate("/vendas")} />
               <OptionCard icon="bx-user" label="Funcionários" onClick={() => navigate("/funcionarios")} />
             </>
