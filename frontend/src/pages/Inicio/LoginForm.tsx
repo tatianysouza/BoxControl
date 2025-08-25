@@ -60,6 +60,9 @@ const LoginForm = () => {
 
         <Button text="Entrar" type="submit" color='' onClick={handleSubmit}/>
       </form>
+        <div className={styles.loginContent}>
+          <p>Ainda não tem uma conta? <span onClick={() => navigate("/criar-conta")}>Registre-se!</span></p>
+        </div>
     </div>
   );
 };

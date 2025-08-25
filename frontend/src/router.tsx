@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import MinhasVendas from "./pages/MinhasVendas/MinhasVendas";
 import Vendas from "./pages/Vendas/Vendas";
 import Funcionarios from "./pages/Funcionarios/Funcionarios";
+import CriarConta from "./pages/CriarConta/CriarConta";
 
 function AppRouter() {
   const token = localStorage.getItem("token");
@@ -16,6 +17,7 @@ function AppRouter() {
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<LoginForm />} />
+      <Route path="/criar-conta" element={<CriarConta />} />
       {token && (
         <>
           <Route path="/dashboard" element={<Escolha />} />
