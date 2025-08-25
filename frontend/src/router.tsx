@@ -7,6 +7,7 @@ import CashRegisterPage from "./pages/ControleCaixa/CashRegisterPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import MinhasVendas from "./pages/MinhasVendas/MinhasVendas";
 import Vendas from "./pages/Vendas/Vendas";
+import Funcionarios from "./pages/Funcionarios/Funcionarios";
 
 function AppRouter() {
   const token = localStorage.getItem("token");
@@ -24,6 +25,7 @@ function AppRouter() {
           <Route path="/painel-de-controle" element={<Dashboard />} />
           <Route path="/minhas-vendas" element={<MinhasVendas />} />
           <Route path="/vendas" element={<Vendas />} />
+          <Route path="/funcionarios" element={<Funcionarios />} />
         </>
       )}
 
