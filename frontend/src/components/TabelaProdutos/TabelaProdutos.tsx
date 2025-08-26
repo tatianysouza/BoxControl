@@ -130,7 +130,7 @@ export default function Table({produtos: propsProdutos, buscaAPI = false}: Tabel
                 <thead className={styles.cabecalho}>
                     <tr>
                         <th>Nome</th>
-                        <th>Coódigo de Barras</th>
+                        <th>Código de Barras</th>
                         <th>Categoria</th>
                         <th>Estoque</th>
                         <th>Fornecedor</th>

@@ -46,7 +46,7 @@ function Estoque(){
             );
             alert("Produto adicionado com sucesso!");
             setForm({ nome: "", preco: "", estoque: "", codigo_barras: "", categoria: "", fornecedor: "" });
-            window.location.reload();
+            setVerModal(false);
         } catch (error) {
             console.error(error);
             alert("Erro ao cadastrar");
@@ -83,7 +83,7 @@ function Estoque(){
                             <div>
                                 <InputField label="Fornecedor" value={form.fornecedor} onChange={(e) => setForm({ ...form, fornecedor: e.target.value })} className="border rounded p-2" required />
                             </div>
-                            <Button type="submit" disabled={loading} text="Adicionar" color="" />
+                            <Button type="submit" disabled={loading} text="Salvar" color="" />
                             <Button text="Cancelar" color="grey" onClick={() => setVerModal(false)}/>
                         </form>
                     </div>
