@@ -3,8 +3,10 @@ import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 import Estoque from "./Estoque";
 import axios from "axios";
+import type { ReactNode, ChangeEventHandler } from "react";
 
 vi.mock("axios");
+const mockedAxios = vi.mocked(axios, { deep: true });
 
 vi.mock("../../components/BackButton/BackButton", () => ({
   default: ({ text, onClick }: { text: string; onClick: () => void }) => (
@@ -17,25 +19,37 @@ vi.mock("../../components/Title/Title", () => ({
 }));
 
 vi.mock("../../components/Header/Header", () => ({
-  default: ({ leftContent, centerContent, rightContent }: any) => (
-    <header>
-      {leftContent}
-      {centerContent}
-      {rightContent}
-    </header>
-  ),
+  default: ({
+    leftContent,
+    centerContent,
+    rightContent,
+  }: {
+    leftContent?: ReactNode;
+    centerContent?: ReactNode;
+    rightContent?: ReactNode;
+  }) => <header>{leftContent}{centerContent}{rightContent}</header>,
 }));
 
 vi.mock("../../components/Button/Button", () => ({
-  default: ({ text, onClick, ...props }: any) => (
-    <button onClick={onClick} {...props}>
-      {text}
-    </button>
+  default: ({
+    text,
+    onClick,
+    ...props
+  }: { text: string; onClick: () => void } & React.ComponentProps<"button">) => (
+    <button onClick={onClick} {...props}>{text}</button>
   ),
 }));
 
 vi.mock("../../components/InputField/InputField", () => ({
-  default: ({ label, value, onChange }: any) => (
+  default: ({
+    label,
+    value,
+    onChange,
+  }: {
+    label: string;
+    value: string;
+    onChange: ChangeEventHandler<HTMLInputElement>;
+  }) => (
     <label>
       {label}
       <input value={value} onChange={onChange} />
@@ -66,8 +80,8 @@ describe("Tela Estoque", () => {
     localStorage.setItem("token", "fake-token");
 
     // Mock padrão de axios
-    (axios.get as vi.Mock).mockResolvedValue({ data: [] });
-    (axios.post as vi.Mock).mockResolvedValue({ data: {} });
+    mockedAxios.get.mockResolvedValue({ data: [] });
+    mockedAxios.post.mockResolvedValue({ data: {} });
   });
 
   it("renderiza título e tabela", async () => {
@@ -82,7 +96,7 @@ describe("Tela Estoque", () => {
     expect(screen.getByTestId("mock-table")).toBeInTheDocument();
   });
 
-  it("navega para /dashboard ao clicar em Voltar", async () => {
+  it("navega para /dashboard ao clicar em Voltar", () => {
     localStorage.setItem("role", "gerente");
 
     render(
