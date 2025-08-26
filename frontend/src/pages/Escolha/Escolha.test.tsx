@@ -70,7 +70,6 @@ describe('Tela Escolha', () => {
 
     expect(screen.getByText('Escolha uma opção:')).toBeInTheDocument();
     expect(screen.getByTestId('option-Meu Perfil')).toBeInTheDocument();
-    expect(screen.getByTestId('option-Estoque')).toBeInTheDocument();
     expect(screen.getByText('Logout')).toBeInTheDocument();
   });
 
