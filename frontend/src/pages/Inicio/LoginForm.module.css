@@ -17,3 +17,19 @@
   color: var(--dark);
   margin-bottom: 24px;
 }
+
+.loginContent{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.loginContent span {
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.loginContent span:hover {
+  color: blue;
+  transform: scale(1.08);
+}

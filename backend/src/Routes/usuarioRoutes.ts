@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { cadastrarUsuario, loginUsuario, perfilUsuario, editarUsuario, alterarStatusUsuario } from '../controllers/usuarioController';
 import autenticarUsuario from '../middlewares/authMiddleware';
 import autorizarCargo from '../middlewares/authRoleMiddleware';
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 const router = Router();
 
@@ -14,7 +16,7 @@ router.get('/perfil', autenticarUsuario, perfilUsuario);
 
 router.get('/listar', autenticarUsuario, autorizarCargo(['Gerente']), async (req: any, res: any) => {
   try {
-    const usuarios = await req.prisma.user.findMany({
+    const usuarios = await prisma.user.findMany({
       select: {
         id: true,
         nome: true,
